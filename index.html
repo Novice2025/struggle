@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dominando "Struggle" - Para Brasileiros</title>
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos Globais e Tema Netflix */
+        :root {
+            --netflix-red: #E50914;
+            --netflix-dark: #141414;
+            --netflix-light-dark: #222222;
+            --text-color: #E5E5E5;
+            --accent-gray: #A0A0A0;
+            --border-radius: 8px;
+            --padding-base: 1.5rem;
+        }
+
+        body {
+            font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--netflix-dark);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: linear-gradient(to bottom, var(--netflix-dark) 0%, var(--netflix-light-dark) 100%);
+        }
+
+        /* Cabeçalho */
+        .header {
+            background-color: var(--netflix-dark);
+            padding: 1.5rem var(--padding-base);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid var(--netflix-red);
+        }
+
+        .header-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--netflix-red);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+            margin: 0;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-title i {
+            font-size: 0.8em;
+            color: var(--text-color);
+        }
+
+        /* Conteúdo Principal */
+        .main-content {
+            flex-grow: 1;
+            max-width: 900px;
+            margin: 2rem auto;
+            background-color: var(--netflix-light-dark);
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+            padding: var(--padding-base) 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--netflix-red);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-text {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        /* Acordeão (Dropdown List) */
+        .accordion-item {
+            background-color: var(--netflix-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            margin-bottom: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem var(--padding-base);
+            background-color: var(--netflix-light-dark);
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-color);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background-color 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background-color: #333333;
+        }
+
+        .accordion-header i {
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-header.active i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 var(--padding-base);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            background-color: var(--netflix-dark);
+        }
+
+        .accordion-content.active {
+            max-height: 500px; /* Ajuste conforme necessário para o conteúdo */
+            padding: var(--padding-base) var(--padding-base);
+        }
+
+        .accordion-content p {
+            margin-bottom: 1em;
+        }
+
+        .accordion-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .accordion-content li {
+            margin-bottom: 0.5em;
+            padding-left: 1.5em;
+            position: relative;
+        }
+
+        .accordion-content li::before {
+            content: '•';
+            color: var(--netflix-red);
+            position: absolute;
+            left: 0;
+        }
+
+        /* Botões de Áudio (mantidos para consistência, mas não usados para "Looking Forward") */
+        .audio-player {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #2a2a2a;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            justify-content: center;
+        }
+
+        .audio-button {
+            background-color: var(--netflix-red);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .audio-button:hover {
+            background-color: #CC0812;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .audio-button i {
+            font-size: 1.2em;
+        }
+
+        /* Rodapé */
+        .footer {
+            text-align: center;
+            padding: 1.5rem var(--padding-base);
+            background-color: var(--netflix-dark);
+            color: var(--accent-gray);
+            font-size: 0.9rem;
+            margin-top: auto;
+            border-top: 2px solid var(--netflix-red);
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header-title {
+                font-size: 1.8rem;
+                text-align: center;
+                display: block;
+            }
+            .header-title i {
+                display: block;
+                margin-bottom: 5px;
+            }
+            .main-content {
+                margin: 1rem;
+                padding: 1rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .section-text {
+                font-size: 1rem;
+            }
+            .accordion-header {
+                font-size: 1rem;
+                padding: 0.8rem 1rem;
+            }
+            .accordion-content {
+                padding: 0.8rem 1rem;
+            }
+            .audio-player {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .audio-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Language buttons for introduction */
+        .intro-language-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+        }
+
+        .intro-lang-button {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            background-color: #444;
+            color: var(--text-color);
+        }
+
+        .intro-lang-button.active {
+            background-color: var(--netflix-red);
+            color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+            transform: translateY(-2px);
+        }
+
+        .intro-lang-button:hover:not(.active) {
+            background-color: #555;
+            transform: translateY(-1px);
+        }
+
+        .intro-text-content {
+            transition: opacity 0.5s ease-in-out;
+        }
+        .intro-text-content.hidden {
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        /* Styling for (Português/English) format */
+        .lang-pair {
+            display: block; /* Ensures each pair is on a new line */
+            margin-bottom: 0.5em; /* Space between pairs */
+            font-size: 0.95em; /* Slightly smaller font for examples */
+        }
+        .lang-pair strong {
+            color: var(--netflix-red); /* Highlight the expression */
+        }
+        .lang-pair em {
+            font-style: normal; /* Remove italic from original <em> */
+            color: var(--accent-gray); /* Distinguish translation */
+        }
+
+        /* Call to Action Box */
+        .call-to-action-box {
+            background-color: var(--netflix-red);
+            color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            margin-top: 3rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .call-to-action-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+        }
+
+        .call-to-action-box p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .call-to-action-button {
+            background-color: white;
+            color: var(--netflix-red);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .call-to-action-button:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Translation Practice Section */
+        .translation-exercise {
+            background-color: #2a2a2a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            margin-top: 15px; /* Added margin-top for spacing */
+            margin-bottom: 15px;
+            padding: 1.5rem;
+        }
+
+        .translation-exercise p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .translation-exercise input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 0.8rem 10px;
+            margin-bottom: 1rem;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #333;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .translation-exercise input[type="text"]:focus {
+            outline: none;
+            border-color: var(--netflix-red);
+            box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.5);
+        }
+
+        .translation-exercise .show-answer-btn {
+            background-color: #007bff; /* A nice blue for action */
+            color: white;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .translation-exercise .show-answer-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .translation-exercise .correct-translation {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            background-color: #3a3a3a;
+            border: 1px solid #555;
+            border-radius: 5px;
+            color: #76FF03; /* Green for correct answer */
+            font-weight: bold;
+            display: none; /* Hidden by default */
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1 class="header-title"><i class="fas fa-fist-raised"></i> Struggle: Um Guia para Brasileiros (A Guide for Brazilians)</h1>
+    </header>
+
+    <main class="main-content">
+        <section id="introduction">
+            <h2 class="section-title">Entendendo "Struggle": Desafios e Superação (Understanding "Struggle": Challenges and Overcoming)</h2>
+
+            <div class="intro-language-buttons">
+                <button id="intro-lang-pt-btn" class="intro-lang-button active">Português</button>
+                <button id="intro-lang-en-btn" class="intro-lang-button">English</button>
+            </div>
+
+            <div id="intro-pt" class="intro-text-content">
+                <p class="section-text">No inglês, a palavra "struggle" é fundamental para descrever situações de dificuldade, esforço intenso e a própria batalha para superar obstáculos. (In English, the word "struggle" is fundamental for describing situations of difficulty, intense effort, and the battle itself to overcome obstacles.) Ela pode ser usada tanto como verbo quanto como substantivo, transmitindo nuances importantes sobre os desafios que enfrentamos e a persistência necessária para superá-los. (It can be used as both a verb and a noun, conveying important nuances about the challenges we face and the persistence needed to overcome them.)</p>
+                <p class="section-text">Compreender "struggle" em seus diversos contextos é crucial para uma comunicação mais precisa e empática, seja no ambiente profissional ao discutir projetos desafiadores, ou na vida pessoal ao falar sobre dificuldades. (Understanding "struggle" in its various contexts is crucial for more precise and empathetic communication, whether in a professional setting when discussing challenging projects, or in personal life when talking about difficulties.)</p>
+                <p class="section-text">Vamos explorar o significado e os usos de "struggle" para que você possa empregá-la com confiança e clareza. (Let's explore the meaning and uses of "struggle" so you can employ it with confidence and clarity.)</p>
+            </div>
+
+            <div id="intro-en" class="intro-text-content hidden">
+                <p class="section-text">In English, the word "struggle" is fundamental for describing situations of difficulty, intense effort, and the battle itself to overcome obstacles. It can be used as both a verb and a noun, conveying important nuances about the challenges we face and the persistence needed to overcome them.</p>
+                <p class="section-text">Understanding "struggle" in its various contexts is crucial for more precise and empathetic communication, whether in a professional setting when discussing challenging projects, or in personal life when talking about difficulties.</p>
+                <p class="section-text">Let's explore the meaning and uses of "struggle" so you can employ it with confidence and clarity.</p>
+            </div>
+        </section>
+
+        <section id="struggle-section">
+            <h2 class="section-title">Struggle: Verbo e Substantivo (Struggle: Verb and Noun)</h2>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    Struggle (Verbo): Lutar, Esforçar-se (Struggle (Verb): To Fight, To Strive) <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Como verbo, **struggle** significa **lutar, esforçar-se, debater-se ou ter dificuldade para fazer algo**. (As a verb, **struggle** means **to fight, strive, contend, or have difficulty doing something**.) Implica um esforço considerável para superar uma dificuldade ou alcançar um objetivo. (It implies considerable effort to overcome a difficulty or achieve a goal.)</p>
+                    <ul>
+                        <li><span class="lang-pair">"Many small businesses **struggle** to survive in the current economy." <br> <em>(Muitas pequenas empresas **lutam** para sobreviver na economia atual.)</em></span></li>
+                        <li><span class="lang-pair">"She **struggled** to understand the complex instructions." <br> <em>(Ela **teve dificuldade** para entender as instruções complexas.)</em></span></li>
+                        <li><span class="lang-pair">"We are **struggling** with the new software." <br> <em>(Estamos **tendo dificuldades** com o novo software.)</em></span></li>
+                        <li><span class="lang-pair">"He **struggled** to keep his emotions in check during the difficult conversation." <br> <em>(Ele **lutou** para controlar suas emoções durante a conversa difícil.)</em></span></li>
+                        <li><span class="lang-pair">"The team **struggled** to find a solution before the deadline." <br> <em>(A equipe **se esforçou** para encontrar uma solução antes do prazo.)</em></span></li>
+                    </ul>
+                    <p><strong>Substitua: "Ter dificuldade", "Se virar", "Enfrentar"</strong> (Replace: "To have difficulty", "To manage", "To face")<br>
+                    "Struggle" como verbo é mais direto e expressa a ação de lutar contra uma adversidade de forma mais vívida do que as alternativas em português. ( "Struggle" as a verb is more direct and expresses the action of fighting against adversity more vividly than the Portuguese alternatives.)</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    Struggle (Substantivo): Luta, Dificuldade, Batalha (Struggle (Noun): Fight, Difficulty, Battle) <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Como substantivo, **struggle** refere-se a uma **luta, dificuldade, batalha ou esforço árduo**. (As a noun, **struggle** refers to a **fight, difficulty, battle, or arduous effort**.) Pode ser um conflito físico, mental ou uma série de esforços para alcançar algo. (It can be a physical, mental conflict, or a series of efforts to achieve something.)</p>
+                    <ul>
+                        <li><span class="lang-pair">"The company's **struggle** for market share is intense." <br> <em>(A **luta** da empresa por fatia de mercado é intensa.)</em></span></li>
+                        <li><span class="lang-pair">"His personal **struggle** with anxiety affected his work." <br> <em>(Sua **luta** pessoal contra a ansiedade afetou seu trabalho.)</em></span></li>
+                        <li><span class="lang-pair">"It was a constant **struggle** to balance work and family life." <br> <em>(Era uma **dificuldade** constante equilibrar trabalho e vida familiar.)</em></span></li>
+                        <li><span class="lang-pair">"The **struggle** for equality continues worldwide." <br> <em>(A **batalha** pela igualdade continua em todo o mundo.)</em></span></li>
+                        <li><span class="lang-pair">"After years of **struggle**, the artist finally achieved recognition." <br> <em>(Após anos de **luta**, o artista finalmente alcançou reconhecimento.)</em></span></li>
+                    </ul>
+                    <p><strong>Substitua: "Dificuldade", "Problema", "Luta" (genérico)</strong> (Replace: "Difficulty", "Problem", "Fight" (generic))<br>
+                    "Struggle" como substantivo encapsula a ideia de um desafio ou conflito de forma mais abrangente e impactante, especialmente quando se refere a um período ou processo. ( "Struggle" as a noun encapsulates the idea of a challenge or conflict more comprehensively and impactfully, especially when referring to a period or process.)</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="walkthrough-expressions">
+            <h2 class="section-title">Walkthrough: Entendendo "Struggle" (Walkthrough: Understanding "Struggle")</h2>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    Struggle: Por que, Como e Quando Usar (Struggle: Why, How, and When to Use) <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <h3>Por que usar "Struggle"? (Why use "Struggle"?)</h3>
+                    <p>Usar "struggle" permite expressar a intensidade e a natureza desafiadora de uma situação ou esforço. (Using "struggle" allows you to express the intensity and challenging nature of a situation or effort.) Seja para descrever uma dificuldade contínua, uma batalha por algo, ou o esforço para superar um obstáculo, "struggle" confere um peso e uma clareza que outras palavras podem não ter. (Whether describing an ongoing difficulty, a battle for something, or the effort to overcome an obstacle, "struggle" conveys a weight and clarity that other words may lack.)</p>
+                    <h3>Como usar "Struggle"? (How to use "Struggle"?)</h3>
+                    <ul>
+                        <li><span class="lang-pair">**Como verbo:** "To struggle with something" (ter dificuldade com algo), "to struggle to do something" (esforçar-se para fazer algo). Ex: "The company struggled with low sales." (A empresa teve dificuldades com as baixas vendas.)</span></li>
+                        <li><span class="lang-pair">**Como substantivo:** "A struggle for something" (uma luta por algo), "a struggle against something" (uma luta contra algo). Ex: "It was a long struggle for recognition." (Foi uma longa luta por reconhecimento.)</span></li>
+                    </ul>
+                    <h3>Quando usar "Struggle"? (When to use "Struggle"?)</h3>
+                    <ul>
+                        <li><span class="lang-pair">Ao discutir desafios financeiros, operacionais ou de mercado em negócios. (When discussing financial, operational, or market challenges in business.)</span></li>
+                        <li><span class="lang-pair">Para descrever dificuldades pessoais, como lidar com uma nova habilidade, um problema de saúde ou uma mudança de vida. (To describe personal difficulties, such as dealing with a new skill, a health issue, or a life change.)</span></li>
+                        <li><span class="lang-pair">Em narrativas, relatórios ou comunicações que exigem um tom mais sério e realista sobre os obstáculos. (In narratives, reports, or communications that require a more serious and realistic tone about obstacles.)</span></li>
+                        <li><span class="lang-pair">Para enfatizar a resiliência e a persistência de indivíduos ou grupos. (To emphasize the resilience and persistence of individuals or groups.)</span></li>
+                    </ul>
+
+                    <div class="translation-exercise">
+                        <p>1. A equipe conseguiu prosperar mesmo com os prazos apertados. (The team managed to thrive even with tight deadlines.)</p>
+                        <input type="text" placeholder="Sua tradução aqui... (Your translation here...)">
+                        <button class="show-answer-btn">Mostrar Resposta (Show Answer)</button>
+                        <div class="correct-translation">
+                            Resposta Correta: "The team managed to thrive even with tight deadlines."
+                        </div>
+                    </div>
+                    <div class="translation-exercise">
+                        <p>2. Nossos clientes prosperam quando usamos as melhores práticas. (Our clients thrive when we use best practices.)</p>
+                        <input type="text" placeholder="Sua tradução aqui... (Your translation here...)">
+                        <button class="show-answer-btn">Mostrar Resposta (Show Answer)</button>
+                        <div class="correct-translation">
+                            Resposta Correta: "Our clients thrive when we use best practices."
+                        </div>
+                    </div>
+                    <div class="translation-exercise">
+                        <p>3. Ele sempre prosperou em funções que exigem criatividade. (He has always thrived in roles that require creativity.)</p>
+                        <input type="text" placeholder="Sua tradução aqui... (Your translation here...)">
+                        <button class="show-answer-btn">Mostrar Resposta (Show Answer)</button>
+                        <div class="correct-translation">
+                            Resposta Correta: "He has always thrived in roles that require creativity."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="additional-translation-practice">
+            <h2 class="section-title">Prática de Tradução Adicional (Additional Translation Practice)</h2>
+            <p class="section-text" style="text-align: center;">Traduza as frases abaixo para o inglês. Use o botão para ver a resposta sugerida pela IA.</p>
+
+            <div class="translation-exercise">
+                <p>1. A startup espera prosperar no novo mercado. (The startup hopes to thrive in the new market.)</p>
+                <input type="text" placeholder="Sua tradução aqui...">
+                <button class="show-answer-btn">Mostrar Resposta (Show AI Answer)</button>
+                <div class="correct-translation">
+                    Resposta Correta: "The startup hopes to thrive in the new market."
+                </div>
+            </div>
+
+            <div class="translation-exercise">
+                <p>2. Devemos nos esforçar para alcançar nossos objetivos, não importa os desafios. (We must strive to achieve our goals, no matter the challenges.)</p>
+                <input type="text" placeholder="Sua tradução aqui...">
+                <button class="show-answer-btn">Mostrar Resposta (Show AI Answer)</button>
+                <div class="correct-translation">
+                    Resposta Correta: "We must strive to achieve our goals, no matter the challenges."
+                </div>
+            </div>
+
+            <div class="translation-exercise">
+                <p>3. Os alunos estavam ansiosos para a excursão de campo. (The students were eager for the field trip.)</p>
+                <input type="text" placeholder="Sua tradução aqui...">
+                <button class="show-answer-btn">Mostrar Resposta (Show AI Answer)</button>
+                <div class="correct-translation">
+                    Resposta Correta: "The students were eager for the field trip."
+                </div>
+            </div>
+
+            <div class="translation-exercise">
+                <p>4. A construção da nova ponte é um grande empreendimento de engenharia. (The construction of the new bridge is a great engineering endeavour.)</p>
+                <input type="text" placeholder="Sua tradução aqui...">
+                <button class="show-answer-btn">Mostrar Resposta (Show AI Answer)</button>
+                <div class="correct-translation">
+                    Resposta Correta: "The construction of the new bridge is a great engineering endeavour."
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusion">
+            <h2 class="section-title">Conclusão (Conclusion)</h2>
+            <p class="section-text">Dominar o uso de "struggle" permite que você descreva desafios e a resiliência necessária para enfrentá-los com maior precisão e impacto em inglês. (Mastering the use of "struggle" allows you to describe challenges and the resilience needed to face them with greater precision and impact in English.) Seja como verbo ou substantivo, essa palavra é uma ferramenta poderosa para comunicar a realidade de esforços e superações. (Whether as a verb or a noun, this word is a powerful tool for communicating the reality of efforts and overcoming.)</p>
+            <p class="section-text">Pratique usar "struggle" em diferentes contextos para se sentir mais confortável e confiante. (Practice using "struggle" in different contexts to feel more comfortable and confident.) Lembre-se, cada **struggle** é uma oportunidade para crescer! (Remember, every **struggle** is an opportunity to grow!)</p>
+        </section>
+
+        <section id="call-to-action">
+            <div class="call-to-action-box">
+                <h3>Aprimore Seu Inglês: Entenda e Use "Struggle"! (Improve Your English: Understand and Use "Struggle"!)</h3>
+                <p>Comece a aplicar essa palavra essencial em sua comunicação diária e observe como ela enriquece suas conversas! (Start applying this essential word in your daily communication and see how it enriches your conversations!)</p>
+                <button class="call-to-action-button" onclick="alert('Excelente! Sua comunicação em inglês está evoluindo!');">
+                    Começar a Usar Agora! (Start Using Now!)
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Daby © 2025 ✨🚀</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Lógica para os acordeões (dropdowns)
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling; // Pega o conteúdo do acordeão
+                    const icon = header.querySelector('i'); // Pega o ícone
+
+                    // Fecha outros acordeões abertos (opcional, mas bom para UX)
+                    accordionHeaders.forEach(otherHeader => {
+                        if (otherHeader !== header && otherHeader.classList.contains('active')) {
+                            otherHeader.classList.remove('active');
+                            otherHeader.nextElementSibling.classList.remove('active');
+                            otherHeader.querySelector('i').style.transform = 'rotate(0deg)';
+                        }
+                    });
+
+                    // Alterna a classe 'active' no cabeçalho e no conteúdo
+                    header.classList.toggle('active');
+                    content.classList.toggle('active');
+
+                    // Gira o ícone de chevron
+                    if (header.classList.contains('active')) {
+                        icon.style.transform = 'rotate(180deg)';
+                    } else {
+                        icon.style.transform = 'rotate(0deg)';
+                    }
+                });
+            });
+
+            // Lógica para os botões de áudio (mantidos, mas não há áudio específico para estas palavras)
+            const audioButtons = document.querySelectorAll('.audio-button');
+            const synth = window.speechSynthesis;
+
+            audioButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const wordToSpeak = button.dataset.audioWord;
+                    if (wordToSpeak && synth) {
+                        const utterance = new SpeechSynthesisUtterance(wordToSpeak);
+                        utterance.lang = 'en-US'; // Define o idioma para inglês americano para pronúncia correta
+                        synth.speak(utterance);
+                    } else {
+                        console.error('Web Speech API not supported or word not defined.');
+                    }
+                });
+            });
+
+            // Lógica para alternar a introdução entre português e inglês
+            const introLangPtBtn = document.getElementById('intro-lang-pt-btn');
+            const introLangEnBtn = document.getElementById('intro-lang-en-btn');
+            const introPtContent = document.getElementById('intro-pt');
+            const introEnContent = document.getElementById('intro-en');
+
+            function showIntroLanguage(lang) {
+                if (lang === 'pt') {
+                    introPtContent.classList.remove('hidden');
+                    introEnContent.classList.add('hidden');
+                    introLangPtBtn.classList.add('active');
+                    introLangEnBtn.classList.remove('active');
+                } else if (lang === 'en') {
+                    introPtContent.classList.add('hidden');
+                    introEnContent.classList.remove('hidden');
+                    introLangPtBtn.classList.remove('active');
+                    introLangEnBtn.classList.add('active');
+                }
+            }
+
+            introLangPtBtn.addEventListener('click', () => showIntroLanguage('pt'));
+            introLangEnBtn.addEventListener('click', () => showIntroLanguage('en'));
+
+            // Lógica para os botões "Mostrar Resposta" na seção de prática de tradução
+            const showAnswerButtons = document.querySelectorAll('.translation-exercise .show-answer-btn');
+
+            showAnswerButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const parentExercise = button.closest('.translation-exercise');
+                    const correctAnswerDiv = parentExercise.querySelector('.correct-translation');
+                    
+                    if (correctAnswerDiv) {
+                        correctAnswerDiv.style.display = 'block'; // Mostra a div da resposta
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
